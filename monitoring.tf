@@ -58,6 +58,8 @@ resource "aws_cloudwatch_event_rule" "build_alerts" {
   name        = "capture-build-events"
   description = "Capture build events"
 
+  tags = local.tags
+
   event_pattern = <<PATTERN
 {
   "source": [

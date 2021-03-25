@@ -14,28 +14,39 @@
  * limitations under the License.
  */
 
+variable "tags" {
+  type = map(string)
+  default = {}
+  description = "A mapping of tags to assign to all resources."
+}
+
 variable "name" {
   type = string
+  description = "Unique name used as a prefix for all resources to avoid name conflicts within the AWS account."
 }
 
 variable "messaging_app" {
   type = string
   default = ""
+  description = "Supported values: slack"
 }
 
 variable "messaging_webhook" {
   type = string
   default = ""
+  description = "For example: slack webhook url"
 }
 
 variable "messaging_critical_channel" {
   type = string
   default = ""
+  description = "For example: critical slack channel"
 }
 
 variable "messaging_builds_channel" {
   type = string
   default = ""
+  description = "For example: builds slack channel"
 }
 
 /* TODO: implement alerts (use google module as an example)

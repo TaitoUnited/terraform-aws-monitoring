@@ -15,8 +15,7 @@
  */
 
 locals {
-  tags = {
-  }
+  tags = var.tags
 
   /* TODO: implement alerts (use google module as an example)
 
