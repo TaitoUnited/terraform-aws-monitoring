@@ -18,7 +18,7 @@ module "notify_slack_uptimez" {
   count   = var.messaging_app == "slack" && var.messaging_critical_channel != "" ? 1 : 0
 
   source  = "terraform-aws-modules/notify-slack/aws"
-  version = "4.13.0"
+  version = "4.18.0"
 
   sns_topic_name       = "${var.name}-uptimez"
   lambda_function_name = "${var.name}-uptimez"
@@ -33,7 +33,7 @@ module "notify_slack_builds" {
   count   = var.messaging_app == "slack" && var.messaging_builds_channel != "" ? 1 : 0
 
   source  = "terraform-aws-modules/notify-slack/aws"
-  version = "4.13.0"
+  version = "4.18.0"
 
   sns_topic_name       = "${var.name}-builds"
   lambda_function_name = "${var.name}-builds"
