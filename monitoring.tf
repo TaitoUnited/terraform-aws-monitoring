@@ -15,7 +15,7 @@
  */
 
 module "notify_slack_uptimez" {
-  count   = var.messaging_app == "slack" && var.messaging_critical_channel != "" ? 1 : 0
+  count   = var.messaging_app == "slack" && var.messaging_critical_channel != null && var.messaging_critical_channel != "" ? 1 : 0
 
   source  = "terraform-aws-modules/notify-slack/aws"
   version = "4.18.0"
@@ -30,7 +30,7 @@ module "notify_slack_uptimez" {
 }
 
 module "notify_slack_builds" {
-  count   = var.messaging_app == "slack" && var.messaging_builds_channel != "" ? 1 : 0
+  count   = var.messaging_app == "slack" && var.messaging_builds_channel != null && var.messaging_builds_channel != "" ? 1 : 0
 
   source  = "terraform-aws-modules/notify-slack/aws"
   version = "4.18.0"
@@ -45,7 +45,7 @@ module "notify_slack_builds" {
 }
 
 resource "aws_cloudwatch_event_target" "build_alerts" {
-  count     = var.messaging_app == "slack" && var.messaging_builds_channel != "" ? 1 : 0
+  count     = var.messaging_app == "slack" && var.messaging_builds_channel != null && var.messaging_builds_channel != "" ? 1 : 0
 
   target_id = "${var.name}-builds"
   rule      = aws_cloudwatch_event_rule.build_alerts[0].name
@@ -53,7 +53,7 @@ resource "aws_cloudwatch_event_target" "build_alerts" {
 }
 
 resource "aws_cloudwatch_event_rule" "build_alerts" {
-  count       = var.messaging_app == "slack" && var.messaging_builds_channel != "" ? 1 : 0
+  count       = var.messaging_app == "slack" && var.messaging_builds_channel != null && var.messaging_builds_channel != "" ? 1 : 0
 
   name        = "capture-build-events"
   description = "Capture build events"
@@ -80,14 +80,14 @@ PATTERN
 }
 
 resource "aws_sns_topic_policy" "build_alerts" {
-  count  = var.messaging_app == "slack" && var.messaging_builds_channel != "" ? 1 : 0
+  count  = var.messaging_app == "slack" && var.messaging_builds_channel != null && var.messaging_builds_channel != "" ? 1 : 0
 
   arn    = module.notify_slack_builds[0].this_slack_topic_arn
   policy = data.aws_iam_policy_document.build_alerts_topic_policy[0].json
 }
 
 data "aws_iam_policy_document" "build_alerts_topic_policy" {
-  count  = var.messaging_app == "slack" && var.messaging_builds_channel != "" ? 1 : 0
+  count  = var.messaging_app == "slack" && var.messaging_builds_channel != null && var.messaging_builds_channel != "" ? 1 : 0
 
   statement {
     effect  = "Allow"
